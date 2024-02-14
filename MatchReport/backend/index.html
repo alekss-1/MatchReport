@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchReport Backend</title>
+</head>
+
+<body>
+    <p id="api-output">a</p>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="models/team-data.js"></script> <!-- Update the path to your team-data.js file -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const options = {
+                method: 'GET',
+                url: 'https://sofascores.p.rapidapi.com/v1/teams/data',
+                params: { team_id: '2062' },
+                headers: {
+                    'X-RapidAPI-Key': '15c6056408msh07475a71a05447dp13e074jsnb938af7a8a5f',
+                    'X-RapidAPI-Host': 'sofascores.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await axios.request(options);
+
+                const output_p = document.getElementById("api-output");
+                output_p.innerHTML = "Raw Data: <br />" + JSON.stringify(response.data) + "<br />";
+
+                const teamInstance = new Team(response.data);
+                output_p.innerHTML += "Parsed Data: <br />" + JSON.stringify(teamInstance) + "<br />";
+
+                console.log(response.data);
+                console.log(JSON.stringify(teamInstance));
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

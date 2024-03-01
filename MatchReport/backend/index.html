@@ -1,46 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MatchReport Backend</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <p id="api-output">a</p>
+    <p id="gpt-output">g</p>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="models/team-data.js"></script> <!-- Update the path to your team-data.js file -->
+    <script src="models/team-data.js"></script>
+    <!-- Update the path to your team-data.js file -->
 
     <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            const options = {
-                method: 'GET',
-                url: 'https://sofascores.p.rapidapi.com/v1/teams/data',
-                params: { team_id: '2062' },
-                headers: {
-                    'X-RapidAPI-Key': '15c6056408msh07475a71a05447dp13e074jsnb938af7a8a5f',
-                    'X-RapidAPI-Host': 'sofascores.p.rapidapi.com'
-                }
-            };
 
-            try {
-                const response = await axios.request(options);
+      document.addEventListener("DOMContentLoaded", async function () {
+        const OpenAI = require("openai");
+        require("dotenv").config();
 
-                const output_p = document.getElementById("api-output");
-                output_p.innerHTML = "Raw Data: <br />" + JSON.stringify(response.data) + "<br />";
+        exports.chatReq = async (req, res) => {
+          try {
 
-                const teamInstance = new Team(response.data);
-                output_p.innerHTML += "Parsed Data: <br />" + JSON.stringify(teamInstance) + "<br />";
+          } catch (err) {
+              res.status(500).json(err.message);
+          }
+      };
 
-                console.log(response.data);
-                console.log(JSON.stringify(teamInstance));
-            } catch (error) {
-                console.error(error);
-            }
-        });
+        try {
+        // Display the response
+      } catch (error) {
+        console.error(error);
+      }
+
+
+        const options = {
+          method: "GET",
+          url: "https://sofascores.p.rapidapi.com/v1/teams/data",
+          params: { team_id: "2062" },
+          headers: {
+            "X-RapidAPI-Key":
+              "15c6056408msh07475a71a05447dp13e074jsnb938af7a8a5f",
+            "X-RapidAPI-Host": "sofascores.p.rapidapi.com",
+          },
+        };
+
+        const output_p = document.getElementById("api-output");
+
+        try {
+          const response = await axios.request(options);
+          output_p.innerHTML =
+            "Raw Data: <br />" + JSON.stringify(response.data) + "<br />";
+
+          const teamInstance = new Team(response.data);
+          output_p.innerHTML +=
+            "Parsed Data: <br />" + JSON.stringify(teamInstance) + "<br />";
+
+          console.log(response.data);
+          console.log(JSON.stringify(teamInstance));
+        } catch (error) {
+          console.error(error);
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>

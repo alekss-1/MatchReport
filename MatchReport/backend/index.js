@@ -40,7 +40,7 @@ async function fetchData() {
     method: 'GET',
     url: 'https://sofascores.p.rapidapi.com/v1/events/statistics',
     params: {
-      event_id: '11387487'
+      event_id: '11387481'
     },
     headers: {
       'X-RapidAPI-Key': '15c6056408msh07475a71a05447dp13e074jsnb938af7a8a5f',
